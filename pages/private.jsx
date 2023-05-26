@@ -6,6 +6,7 @@ import axios from 'axios';
 export default function Private({ privates }) {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [contents, setContents] = useState([]);
 
   const fetchUserData = useCallback(async () => {
@@ -18,6 +19,7 @@ export default function Private({ privates }) {
           console.log(res.data.role.name);
           if (!res.data.role.name === "'Authenticated'")
             return router.push('/');
+          setIsAuthenticated(true);
         })
         .catch((err) => {
           console.log(err);
@@ -41,7 +43,7 @@ export default function Private({ privates }) {
     return 'Loading...';
   }
   return (
-    session && (
+    isAuthenticated && (
       <ul>
         {privates.map(({ attributes: { title, content } }, i) => (
           <li key={i}>
