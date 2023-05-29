@@ -7,18 +7,18 @@ export default function Private({ privates }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [contents, setContents] = useState([]);
 
   const fetchUserData = useCallback(async () => {
     if (session) {
       await axios
         .get(
-          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/users-permissions/roles/${session.id}`,
+          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/users/${session.id}?populate=role`,
         )
         .then((res) => {
           console.log(res.data.role.name);
-          if (!res.data.role.name === "'Authenticated'")
+          if (res.data.role.name !== 'Authenticated') {
             return router.push('/');
+          }
           setIsAuthenticated(true);
         })
         .catch((err) => {
