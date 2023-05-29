@@ -5,19 +5,16 @@ import Cookies from 'js-cookie';
 export const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 console.log(strapiUrl);
 export async function signIn({ email, password }) {
-  const res = await axios.post(
-    `http://127.0.0.1:1337/api/auth/local/`,
-    {
-      identifier: email,
-      password,
-    },
-  );
+  const res = await axios.post(`${strapiUrl}/api/auth/local/`, {
+    identifier: email,
+    password,
+  });
   return res.data;
 }
 
 export async function signUp({ username, email, password }) {
   const res = await axios.post(
-    `http://127.0.0.1:1337/api/auth/local/register`,
+    `${strapiUrl}/api/auth/local/register`,
     {
       username,
       email,
