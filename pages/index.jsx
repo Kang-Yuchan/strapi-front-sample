@@ -55,7 +55,7 @@ export default function Home({ notices }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const notices = await (
     await axios.get(`${strapiUrl}/api/notices`)
   ).data.data;

@@ -56,7 +56,7 @@ export default function Private({ privates }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const privates = await (
     await axios.get(
       `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/privacy-contents`,
